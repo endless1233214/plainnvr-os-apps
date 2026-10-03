@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "tapo-tcw61-driver",
+  "kind": "driver",
+  "name": "TP-Link Tapo TCW61 Local Driver",
+  "version": "0.1.0",
+  "description": "Local TPAP controls and capability discovery for Tapo TCW61 cameras.",
+  "image": {
+    "repository": "ghcr.io/endless1233214/plainnvr-tapo-tcw61-driver",
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "permissions": {
+    "network": "plainnvr-and-camera-lan",
+    "devices": [],
+    "host_paths": []
+  },
+  "plainnvr": {
+    "api_min": "0.1.3",
+    "events": [],
+    "camera_streams": false,
+    "driver_protocol": "plainnvr-driver-v1"
+  },
+  "camera_models": ["TP-Link Tapo TCW61"],
+  "license": "AGPL-3.0-or-later"
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://plainnvr.org/schemas/os-app-manifest-v1.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "kind",
+    "name",
+    "version",
+    "description",
+    "image",
+    "permissions",
+    "plainnvr"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,62}$"},
+    "kind": {"enum": ["app", "driver"]},
+    "name": {"type": "string", "minLength": 1, "maxLength": 80},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "description": {"type": "string", "minLength": 1, "maxLength": 500},
+    "image": {
+      "type": "object",
+      "required": ["repository", "digest"],
+      "properties": {
+        "repository": {"type": "string", "pattern": "^[a-zA-Z0-9._/-]+$"},
+        "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "permissions": {
+      "type": "object",
+      "required": ["network", "devices", "host_paths"],
+      "properties": {
+        "network": {"enum": ["plainnvr", "plainnvr-and-camera-lan"]},
+        "devices": {"type": "array", "items": {"type": "string", "enum": ["gpu"]}},
+        "host_paths": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "plainnvr": {
+      "type": "object",
+      "required": ["api_min", "events", "camera_streams"],
+      "properties": {
+        "api_min": {"type": "string"},
+        "events": {"type": "array", "items": {"type": "string"}},
+        "camera_streams": {"type": "boolean"},
+        "driver_protocol": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "camera_models": {"type": "array", "items": {"type": "string"}},
+    "license": {"type": "string"}
+  },
+  "additionalProperties": false
+}

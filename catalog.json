@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "catalog_version": "0.1.0",
+  "entries": [
+    {
+      "id": "motion-basic",
+      "kind": "app",
+      "manifest": "apps/motion-basic/manifest.json"
+    },
+    {
+      "id": "tapo-tcw61-driver",
+      "kind": "driver",
+      "manifest": "apps/tapo-tcw61-driver/manifest.json"
+    }
+  ]
+}

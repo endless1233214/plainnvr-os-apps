@@ -1,0 +1,15 @@
+services:
+  motion-basic:
+    build: .
+    restart: unless-stopped
+    environment:
+      PLAINNVR_URL: ${PLAINNVR_URL:-http://plainnvr:8787}
+      PLAINNVR_APP_TOKEN: ${PLAINNVR_APP_TOKEN:?set PLAINNVR_APP_TOKEN}
+      PLAINNVR_CAMERA_ID: ${PLAINNVR_CAMERA_ID:?set PLAINNVR_CAMERA_ID}
+      PLAINNVR_RTSP_URL: ${PLAINNVR_RTSP_URL:?set PLAINNVR_RTSP_URL}
+    networks:
+      - plainnvr
+
+networks:
+  plainnvr:
+    external: true

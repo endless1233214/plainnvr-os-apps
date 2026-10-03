@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "motion-basic",
+  "kind": "app",
+  "name": "PlainNVR Basic Motion",
+  "version": "0.1.0",
+  "description": "CPU-only frame-difference motion detection for PlainNVR restreams.",
+  "image": {
+    "repository": "ghcr.io/endless1233214/plainnvr-motion-basic",
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "permissions": {
+    "network": "plainnvr",
+    "devices": [],
+    "host_paths": []
+  },
+  "plainnvr": {
+    "api_min": "0.1.3",
+    "events": ["motion"],
+    "camera_streams": true
+  },
+  "license": "AGPL-3.0-or-later"
+}
