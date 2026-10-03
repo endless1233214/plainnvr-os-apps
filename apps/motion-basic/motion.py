@@ -5,6 +5,7 @@ import json
 import os
 import signal
 import subprocess
+import sys
 import time
 from urllib import request
 
@@ -91,13 +92,19 @@ def main():
             below = 0
             if not active and above >= START_FRAMES:
                 active = True
-                post_event("start", min(1.0, mean_delta / 64.0), mean_delta)
+                try:
+                    post_event("start", min(1.0, mean_delta / 64.0), mean_delta)
+                except OSError as exc:
+                    print(f"event delivery failed: {exc}", file=sys.stderr)
         else:
             below += 1
             above = 0
             if active and below >= STOP_FRAMES:
                 active = False
-                post_event("stop", 0.0, mean_delta)
+                try:
+                    post_event("stop", 0.0, mean_delta)
+                except OSError as exc:
+                    print(f"event delivery failed: {exc}", file=sys.stderr)
         time.sleep(0.01)
 
 
