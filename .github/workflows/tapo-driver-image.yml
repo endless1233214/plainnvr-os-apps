@@ -1,0 +1,45 @@
+name: Build Tapo TCW61 driver image
+
+on:
+  pull_request:
+    paths:
+      - apps/tapo-tcw61-driver/**
+      - schemas/manifest.schema.json
+      - .github/workflows/tapo-driver-image.yml
+  push:
+    branches: [main]
+    paths:
+      - apps/tapo-tcw61-driver/**
+      - schemas/manifest.schema.json
+      - .github/workflows/tapo-driver-image.yml
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish driver image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./apps/tapo-tcw61-driver
+          push: ${{ github.event_name == 'push' }}
+          tags: |
+            ghcr.io/endless1233214/plainnvr-tapo-tcw61-driver:0.2.0
+            ghcr.io/endless1233214/plainnvr-tapo-tcw61-driver:latest

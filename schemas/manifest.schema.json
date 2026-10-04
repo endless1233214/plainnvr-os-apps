@@ -46,7 +46,8 @@
         "api_min": {"type": "string"},
         "events": {"type": "array", "items": {"type": "string"}},
         "camera_streams": {"type": "boolean"},
-        "driver_protocol": {"type": "string"}
+        "driver_protocol": {"type": "string"},
+        "driver_endpoints": {"type": "array", "items": {"type": "string"}}
       },
       "additionalProperties": false
     },
