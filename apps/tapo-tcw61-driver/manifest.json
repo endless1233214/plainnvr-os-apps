@@ -7,7 +7,7 @@
   "description": "Local TPAP driver sidecar with capability discovery and TCW61 controls.",
   "image": {
     "repository": "ghcr.io/endless1233214/plainnvr-tapo-tcw61-driver",
-    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    "digest": "sha256:10230e13d0db262b5814276d2189abfee5f57970b9c8115254e34d7a51f08e7a"
   },
   "permissions": {
     "network": "plainnvr-and-camera-lan",
