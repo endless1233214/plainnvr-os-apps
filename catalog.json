@@ -11,6 +11,11 @@
       "id": "tapo-tcw61-driver",
       "kind": "driver",
       "manifest": "apps/tapo-tcw61-driver/manifest.json"
+    },
+    {
+      "id": "victure-driver",
+      "kind": "driver",
+      "manifest": "apps/victure-driver/manifest.json"
     }
   ]
 }
