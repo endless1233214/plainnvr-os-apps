@@ -1,0 +1,19 @@
+services:
+  tapo-tcw61-driver:
+    build: .
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      DRIVER_TOKEN: ${DRIVER_TOKEN:?set DRIVER_TOKEN}
+      DRIVER_BIND: 0.0.0.0
+      DRIVER_PORT: "8789"
+    networks:
+      - plainnvr
+
+networks:
+  # Attach this network to the PlainNVR service and camera LAN. The driver
+  # never needs host networking, devices, mounts, or the Docker socket.
+  plainnvr:
+    external: true
