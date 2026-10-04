@@ -6,7 +6,6 @@ import os
 import signal
 import subprocess
 import sys
-import time
 from urllib import request
 
 
@@ -73,11 +72,11 @@ def frames():
             process.kill()
 
 
-def main():
+def detect(source, emit=post_event):
     previous = None
     active = False
     above = below = 0
-    for frame in frames():
+    for frame in source:
         if previous is None:
             previous = frame
             continue
@@ -91,23 +90,28 @@ def main():
             above += 1
             below = 0
             if not active and above >= START_FRAMES:
-                active = True
                 try:
-                    post_event("start", min(1.0, mean_delta / 64.0), mean_delta)
+                    emit("start", min(1.0, mean_delta / 64.0), mean_delta)
+                    active = True
                 except OSError as exc:
                     print(f"event delivery failed: {exc}", file=sys.stderr)
         else:
             below += 1
             above = 0
             if active and below >= STOP_FRAMES:
-                active = False
                 try:
-                    post_event("stop", 0.0, mean_delta)
+                    emit("stop", 0.0, mean_delta)
+                    active = False
                 except OSError as exc:
                     print(f"event delivery failed: {exc}", file=sys.stderr)
-        time.sleep(0.01)
+    if active:
+        try:
+            emit("stop", 0.0, 0.0)
+        except OSError as exc:
+            print(f"event delivery failed: {exc}", file=sys.stderr)
 
 
-signal.signal(signal.SIGINT, stop)
-signal.signal(signal.SIGTERM, stop)
-main()
+if __name__ == "__main__":
+    signal.signal(signal.SIGINT, stop)
+    signal.signal(signal.SIGTERM, stop)
+    detect(frames())
