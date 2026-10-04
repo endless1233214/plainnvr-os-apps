@@ -8,6 +8,7 @@ are addressed. Random test credentials are never printed.
 
 import http.cookiejar
 import json
+import os
 import secrets
 import socket
 import subprocess
@@ -15,7 +16,7 @@ import time
 from urllib import request
 
 
-MOTION_IMAGE = "ghcr.io/endless1233214/plainnvr-motion-basic:0.1.0"
+MOTION_IMAGE = os.environ.get("MOTION_IMAGE", "ghcr.io/endless1233214/plainnvr-motion-basic:0.1.0")
 PLAINNVR_IMAGE = "ghcr.io/endless1233214/plainnvr:0.1.4"
 SOURCE_IMAGE = "bluenviron/mediamtx:1.21.1"
 

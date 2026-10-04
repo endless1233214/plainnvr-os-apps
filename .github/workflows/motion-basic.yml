@@ -29,10 +29,15 @@ jobs:
           set -euo pipefail
           python3 -m unittest discover -s apps/motion-basic -p test_motion.py -v
           image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/plainnvr-motion-basic"
-          docker build --platform linux/amd64 -t "$image:0.1.0" -t "$image:0.1.0-${GITHUB_SHA:0:12}" apps/motion-basic
+          version="${GITHUB_REF_NAME#motion-basic-v}"
+          docker build --platform linux/amd64 -t "$image:$version" -t "$image:$version-${GITHUB_SHA:0:12}" apps/motion-basic
 
       - name: Test PlainNVR RTSP restream and event delivery
-        run: python3 apps/motion-basic/integration_test.py
+        shell: bash
+        run: |
+          set -euo pipefail
+          export MOTION_IMAGE="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/plainnvr-motion-basic:${GITHUB_REF_NAME#motion-basic-v}"
+          python3 apps/motion-basic/integration_test.py
 
       - name: Publish immutable commit tag
         env:
@@ -40,7 +45,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/plainnvr-motion-basic:0.1.0-${GITHUB_SHA:0:12}"
+          image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/plainnvr-motion-basic:${GITHUB_REF_NAME#motion-basic-v}-${GITHUB_SHA:0:12}"
           printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
           trap 'docker logout ghcr.io >/dev/null' EXIT
           docker push "$image" | tee "$RUNNER_TEMP/motion-push.log"
