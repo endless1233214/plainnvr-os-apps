@@ -3,14 +3,14 @@ name: Build Tapo TCW61 driver image
 on:
   pull_request:
     paths:
-      - apps/tapo-tcw61-driver/**
-      - schemas/manifest.schema.json
+      - apps/tapo-tcw61-driver/Dockerfile
+      - apps/tapo-tcw61-driver/driver.py
       - .github/workflows/tapo-driver-image.yml
   push:
     branches: [main]
     paths:
-      - apps/tapo-tcw61-driver/**
-      - schemas/manifest.schema.json
+      - apps/tapo-tcw61-driver/Dockerfile
+      - apps/tapo-tcw61-driver/driver.py
       - .github/workflows/tapo-driver-image.yml
 
 permissions:
