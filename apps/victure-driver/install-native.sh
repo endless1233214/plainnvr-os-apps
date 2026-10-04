@@ -8,8 +8,8 @@ if [ "$(id -u)" -ne 0 ] || ! id plainnvr >/dev/null 2>&1; then
     echo 'Run as root on a PlainNVR OS prototype with the plainnvr user.' >&2
     exit 1
 fi
-if ! mountpoint -q /var/lib/plainnvr || [ ! -f /opt/plainnvr/current/app/server.py ]; then
-    echo 'Persistent PlainNVR storage and native runtime are required.' >&2
+if ! mountpoint -q /var/lib/plainnvr || [ ! -f /opt/plainnvr/current/app/victure_sidecar.py ]; then
+    echo 'Persistent storage and a Victure-adapter-enabled PlainNVR runtime are required.' >&2
     exit 1
 fi
 source_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)

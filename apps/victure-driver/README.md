@@ -34,6 +34,8 @@ test instance, review and run `install-native.sh` as root. It installs the
 driver code on persistent storage, creates a private random token, installs a
 systemd unit and recorder drop-in, and starts only the new driver. It does
 **not** restart the recorder; do that separately at a chosen maintenance time.
+The script refuses an OS image that does not contain the companion Victure
+adapter; the current validation ISO must not be treated as driver-enabled.
 The installed recorder drop-in contains:
 
 ```text
