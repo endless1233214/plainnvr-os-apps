@@ -1,0 +1,21 @@
+# Join the recorder's private Compose network. Do not publish a host port.
+services:
+  victure-driver:
+    build: .
+    restart: unless-stopped
+    read_only: true
+    user: "568:568"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      VICTURE_DRIVER_TOKEN_FILE: /run/secrets/victure_driver_token
+    secrets: [victure_driver_token]
+    networks: [plainnvr]
+
+secrets:
+  victure_driver_token:
+    file: ${VICTURE_DRIVER_TOKEN_FILE:?set the token file path}
+
+networks:
+  plainnvr:
+    external: true

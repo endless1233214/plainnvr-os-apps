@@ -1,0 +1,50 @@
+name: Build and publish Victure Driver
+
+on:
+  push:
+    tags: ['victure-driver-v*']
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    if: github.repository == 'endless1233214/plainnvr-os-apps'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Verify tag, manifest, and driver tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#victure-driver-v}"
+          test "victure-driver-v${version}" = "$GITHUB_REF_NAME"
+          test "$version" = "$(python3 -c 'import json; print(json.load(open("apps/victure-driver/manifest.json"))["version"])')"
+          python3 -m unittest discover -s apps/victure-driver -p test_driver.py -v
+          sh -n apps/victure-driver/install-native.sh
+
+      - name: Build and smoke-test unprivileged image
+        shell: bash
+        run: |
+          set -euo pipefail
+          image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/plainnvr-victure-driver"
+          version="${GITHUB_REF_NAME#victure-driver-v}"
+          docker build --platform linux/amd64 -t "$image:$version-${GITHUB_SHA:0:12}" apps/victure-driver
+          docker run --rm --entrypoint python "$image:$version-${GITHUB_SHA:0:12}" \
+            -B -c 'compile(open("/app/driver.py").read(), "/app/driver.py", "exec")'
+
+      - name: Publish immutable commit tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/plainnvr-victure-driver:${GITHUB_REF_NAME#victure-driver-v}-${GITHUB_SHA:0:12}"
+          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          trap 'docker logout ghcr.io >/dev/null' EXIT
+          docker push "$image" | tee "$RUNNER_TEMP/victure-push.log"
+          digest="$(sed -n 's/.*digest: \(sha256:[a-f0-9]\{64\}\).*/\1/p' "$RUNNER_TEMP/victure-push.log" | tail -1)"
+          test -n "$digest"
+          printf 'Published `%s@%s`\n' "${image%:*}" "$digest" >> "$GITHUB_STEP_SUMMARY"

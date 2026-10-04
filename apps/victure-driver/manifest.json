@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "victure-driver",
+  "kind": "driver",
+  "name": "Victure Local Camera Driver",
+  "version": "0.1.0",
+  "description": "Optional local DVRIP and direct-step PTZ/clock control for compatible Victure cameras.",
+  "image": {
+    "repository": "ghcr.io/endless1233214/plainnvr-victure-driver",
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "permissions": {
+    "network": "plainnvr-and-camera-lan",
+    "devices": [],
+    "host_paths": []
+  },
+  "plainnvr": {
+    "api_min": "0.1.4",
+    "events": [],
+    "camera_streams": false,
+    "driver_protocol": "plainnvr-victure-http-v1"
+  },
+  "camera_models": ["Victure DVRIP-compatible", "Victure direct-step-compatible"],
+  "license": "AGPL-3.0-or-later"
+}
