@@ -20,7 +20,9 @@ MOTION_IMAGE = os.environ.get(
     "MOTION_IMAGE",
     "ghcr.io/endless1233214/plainnvr-motion-basic@sha256:00446c4b6c393f173cd8192e5db3a7db60270bda734084d24992f6fb66cd1843",
 )
-PLAINNVR_IMAGE = "ghcr.io/endless1233214/plainnvr:0.1.4"
+PLAINNVR_IMAGE = os.environ.get(
+    "PLAINNVR_IMAGE", "ghcr.io/endless1233214/plainnvr:0.1.4"
+)
 SOURCE_IMAGE = "bluenviron/mediamtx:1.21.1"
 
 
