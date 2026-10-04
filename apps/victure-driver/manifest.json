@@ -7,7 +7,7 @@
   "description": "Optional local DVRIP and direct-step PTZ/clock control for compatible Victure cameras.",
   "image": {
     "repository": "ghcr.io/endless1233214/plainnvr-victure-driver",
-    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    "digest": "sha256:7a8823f133fb44327c8bbb90292429303d7baae6bc4ed492f0be9e304aeba45c"
   },
   "permissions": {
     "network": "plainnvr-and-camera-lan",

@@ -1,7 +1,7 @@
 # Join the recorder's private Compose network. Do not publish a host port.
 services:
   victure-driver:
-    build: .
+    image: ghcr.io/endless1233214/plainnvr-victure-driver@sha256:7a8823f133fb44327c8bbb90292429303d7baae6bc4ed492f0be9e304aeba45c
     restart: unless-stopped
     read_only: true
     user: "568:568"

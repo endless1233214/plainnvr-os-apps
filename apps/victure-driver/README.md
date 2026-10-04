@@ -14,7 +14,7 @@ the service nor the recorder logs the body. There is no cloud dependency.
 
 Create a random token of at least 32 characters in a private file readable by
 the recorder and driver. Attach both services to the same private Docker
-network. `compose.yaml` is a reference service: it has no published port,
+network. `compose.yaml` uses a digest-pinned published image; it has no published port,
 drops capabilities, runs as a non-root user, and mounts only the token secret.
 Configure the recorder with:
 
