@@ -7,7 +7,7 @@
   "description": "CPU-only frame-difference motion detection for PlainNVR restreams.",
   "image": {
     "repository": "ghcr.io/endless1233214/plainnvr-motion-basic",
-    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    "digest": "sha256:00446c4b6c393f173cd8192e5db3a7db60270bda734084d24992f6fb66cd1843"
   },
   "permissions": {
     "network": "plainnvr",
