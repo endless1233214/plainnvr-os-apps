@@ -1,0 +1,22 @@
+[Unit]
+Description=Optional PlainNVR Victure camera driver
+After=network.target
+
+[Service]
+Type=simple
+User=plainnvr
+Group=plainnvr
+Environment=VICTURE_DRIVER_TOKEN_FILE=/var/lib/plainnvr/drivers/victure/token
+ExecStart=/usr/bin/python3 -u /var/lib/plainnvr/drivers/victure/driver.py
+Restart=on-failure
+RestartSec=5s
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
